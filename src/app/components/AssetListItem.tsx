@@ -26,24 +26,19 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ resource }) => {
   return (
     <div className='flex flex-col border-b border-[#3B75A9] transition-all ease-in-out duration-300'>
       <div className='text-black py-2'>
-        {/* Make the title clickable and trigger zoomToAsset */}
-        <h2
-          className='mt-1 font-bold text-lg cursor-pointer hover:text-[#1E79C8] transition-colors ease-in-out'
-        >
-          {resource.Asset}
-        </h2>
+        <h2 className='mt-1 font-bold text-lg'>{resource.Asset}</h2>
       </div>
       <div className=''>
         <div className='flex items-center text-sm py-2 text-[#0E3052]'>
           <MapPinIcon className='h-6 w-6 mr-2 flex-shrink-0 [stroke-width:2]' />
-            {resource.County}
+          {formatType(resource.County)} County
         </div>
       </div>
       <div className=''>
         <div className='flex items-center text-sm py-2 text-[#0E3052]'>
           <BookmarkIcon className='h-6 w-6 mr-2 flex-shrink-0 [stroke-width:2]' />
           <div className='flex-grow min-w-0 whitespace-normal break-words'>
-            {formatType(resource.Live_Site_Category)}
+            {formatType(resource.Organization_Sub_Type)}
           </div>
         </div>
       </div>
@@ -77,9 +72,12 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ resource }) => {
               <p className='whitespace-normal break-words'>{resource.Asset_Description}</p>
             </div>
             <div className='my-4'>
+              <p className='my-2 font-semibold'>Populations Served</p>
+              <p className='whitespace-normal break-words'>{formatType(resource.Asset_Covered_Population)}</p>
+            </div>
+            <div className='my-4'>
               <p className='my-2 font-semibold'>Contact Information</p>
               <p className='whitespace-normal break-words'>{resource.Key_Contact}</p>
-
               {resource.Contact_Email && (
                 <p className='whitespace-normal break-words'>
                   <a

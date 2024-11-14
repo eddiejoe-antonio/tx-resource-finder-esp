@@ -11,6 +11,8 @@ interface ResourceFields {
   Live_Site_Category?: string[];
   Website?: string;
   County?: string;
+  Organization_Sub_Type: string[];
+  Asset_Covered_Population: string[];
   // Add other fields as necessary
 }
 
@@ -53,12 +55,14 @@ const useAirtableFetch = (airtableBaseId: string, airtableApiKey: string) => {
         // Map the current page's records into the desired Resource structure
         const formattedData: Resource[] = data.records.map((record: AirtableRecord) => ({
           Asset: record.fields.Asset || "",
+          Organization_Sub_Type: record.fields.Organization_Sub_Type || "",
           Asset_Description: record.fields.Asset_Description || "",
           Key_Contact: record.fields.Key_Contact || "",
           Contact_Email: record.fields.Contact_Email || "",
           Live_Site_Category: record.fields.Live_Site_Category || [],
           Website: record.fields.Website || "",
           County: record.fields.County || "",
+          Asset_Covered_Population: record.fields.Asset_Covered_Population || "",
         }));
 
         // Concatenate the current page's records with all previous records
@@ -86,6 +90,7 @@ const useAirtableFetch = (airtableBaseId: string, airtableApiKey: string) => {
     // Start fetching data
     fetchAirtableData();
   }, [airtableBaseId, airtableApiKey]);
+console.log(resources);
 
   return { resources, loading, error };
 };
