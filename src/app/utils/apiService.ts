@@ -1,25 +1,28 @@
 import { useState, useEffect } from "react";
-import { Resource } from "../types/assetInventoryTypes"; // Import the Resource interface
+import { Resource } from "../types/assetInventoryTypes";
 
-// Define the structure of your resource fields here
 interface ResourceFields {
-  Asset: string;
-  Location: string;
-  Asset_Description?: string;
-  Key_Contact?: string;
-  Contact_Email?: string;
-  Live_Site_Category?: string[];
-  Website?: string;
-  County?: string;
-  Organization_Sub_Type: string[];
-  Asset_Covered_Population: string[];
-  // Add other fields as necessary
+  "Asset": string;
+  "Location": string;
+  "Asset Description"?: string;
+  "Key Contact"?: string;
+  "Contact Email"?: string;
+  "Live Site Category"?: string[];
+  "Website"?: string;
+  "County"?: string;
+  "Organization Sub-Type": string[];
+  "Asset Covered Population": string[];
 }
 
-// Define the structure of an Airtable record
+
 interface AirtableRecord {
   id: string;
   fields: ResourceFields;
+}
+
+interface AirtableResponse {
+  records: AirtableRecord[];
+  offset?: string;
 }
 
 const useAirtableFetch = (airtableBaseId: string, airtableApiKey: string) => {
@@ -28,70 +31,59 @@ const useAirtableFetch = (airtableBaseId: string, airtableApiKey: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const airtableUrl = `https://api.airtable.com/v0/${airtableBaseId}/Full%20Assets%202024%20Live`;
-    let allRecords: Resource[] = [];
+    const fetchData = async () => {
+      const airtableUrl = `https://api.airtable.com/v0/${airtableBaseId}/Full%20Assets%202024%20Live`;
+      let allRecords: Resource[] = [];
+      let offset: string | undefined = undefined;
 
-    const fetchAirtableData = async (offset?: string) => {
       try {
-        // Construct the URL with offset if available
-        let url = airtableUrl;
-        if (offset) {
-          url += `?offset=${offset}`;
-        }
+        do {
+          const url = offset ? `${airtableUrl}?offset=${offset}` : airtableUrl;
+          const response = await fetch(url, {
+            headers: {
+              Authorization: `Bearer ${airtableApiKey}`,
+              "Content-Type": "application/json",
+            },
+          });
 
-        const response = await fetch(url, {
-          headers: {
-            Authorization: `Bearer ${airtableApiKey}`,
-            "Content-Type": "application/json",
-          },
-        });
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+          const data: AirtableResponse = await response.json();
 
-        const data = await response.json();
+          const formattedData: Resource[] = data.records.map((record) => ({
+            Asset: record.fields["Asset"] || "",
+            Organization_Sub_Type: record.fields["Organization Sub-Type"] || [],
+            Asset_Description: record.fields["Asset Description"] || "",
+            Key_Contact: record.fields["Key Contact"] || "",
+            Contact_Email: record.fields["Contact Email"] || "",
+            Live_Site_Category: record.fields["Live Site Category"] || [],
+            Website: record.fields["Website"] || "",
+            County: Array.isArray(record.fields["County"]) ? record.fields["County"] : [record.fields["County"] || ""],
+            Asset_Covered_Population: record.fields["Asset Covered Population"] || [],
+          }));
+          
+        
+          allRecords = [...allRecords, ...formattedData];
+          offset = data.offset; // Update offset for the next iteration, if present
+        } while (offset);
 
-        // Map the current page's records into the desired Resource structure
-        const formattedData: Resource[] = data.records.map((record: AirtableRecord) => ({
-          Asset: record.fields.Asset || "",
-          Organization_Sub_Type: record.fields.Organization_Sub_Type || "",
-          Asset_Description: record.fields.Asset_Description || "",
-          Key_Contact: record.fields.Key_Contact || "",
-          Contact_Email: record.fields.Contact_Email || "",
-          Live_Site_Category: record.fields.Live_Site_Category || [],
-          Website: record.fields.Website || "",
-          County: record.fields.County || "",
-          Asset_Covered_Population: record.fields.Asset_Covered_Population || "",
-        }));
-
-        // Concatenate the current page's records with all previous records
-        allRecords = allRecords.concat(formattedData);
-
-        // If there's an offset, continue fetching
-        if (data.offset) {
-          fetchAirtableData(data.offset);
-        } else {
-          // If no more offset, set the full records to state
-          setResources(allRecords);
-          setLoading(false);
-        }
+        setResources(allRecords);
       } catch (err: unknown) {
-        let errorMessage = "An unknown error occurred";
-        if (err instanceof Error) {
-          errorMessage = err.message;
-        }
+        const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
         console.error("Error fetching Airtable data:", errorMessage);
         setError(errorMessage);
+      } finally {
         setLoading(false);
       }
     };
 
-    // Start fetching data
-    fetchAirtableData();
+    fetchData();
   }, [airtableBaseId, airtableApiKey]);
-console.log(resources);
 
+  console.log(resources);
+  
   return { resources, loading, error };
 };
 

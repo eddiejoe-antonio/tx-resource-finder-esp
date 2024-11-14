@@ -1,67 +1,103 @@
 import React, { useState } from 'react';
-import { MapPinIcon, BookmarkIcon, LinkIcon } from '@heroicons/react/24/outline';
+import { MapPinIcon, BookmarkIcon, EllipsisVerticalIcon, LinkIcon } from '@heroicons/react/24/outline';
 import { AssetListItemProps } from '../types/assetInventoryTypes';
+import { jsPDF } from 'jspdf';
 
 const AssetListItem: React.FC<AssetListItemProps> = ({ resource }) => {
   const [showMore, setShowMore] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const formatType = (type: string | string[]) => {
-    if (Array.isArray(type)) {
-      return type.join(', ');
-    } else {
-      return type;
-    }
+    return Array.isArray(type) ? type.join(', ') : type;
   };
 
   const formatWebsite = (url: string | undefined | null) => {
     if (!url) {
       return '';
     }
-    if (!url.startsWith('https://') && !url.startsWith('http://')) {
-      return `https://${url}`;
-    }
-    return url;
+    return !url.startsWith('https://') && !url.startsWith('http://') ? `https://${url}` : url;
+  };
+
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 10;
+    const maxWidth = pageWidth - 2 * margin;
+    let yPosition = 10;
+
+    doc.setFontSize(18);
+    doc.text(resource.Asset, margin, yPosition);
+    yPosition += 10;
+
+    doc.setFontSize(12);
+
+    const addWrappedText = (text: string) => {
+      const lines = doc.splitTextToSize(text, maxWidth);
+      doc.text(lines, margin, yPosition);
+      yPosition += lines.length * 6;
+    };
+
+    addWrappedText(`Location: ${formatType(resource.County)}`);
+    addWrappedText(`Organization Type: ${formatType(resource.Organization_Sub_Type)}`);
+    if (resource.Website) addWrappedText(`Website: ${formatWebsite(resource.Website)}`);
+    if (resource.Asset_Description) addWrappedText(`Description: ${resource.Asset_Description}`);
+    addWrappedText(`Populations Served: ${formatType(resource.Asset_Covered_Population)}`);
+    if (resource.Key_Contact) addWrappedText(`Contact: ${resource.Key_Contact}`);
+    if (resource.Contact_Email) addWrappedText(`Email: ${resource.Contact_Email}`);
+
+    doc.save(`${resource.Asset}.pdf`);
   };
 
   return (
-    <div className='flex flex-col border-b border-[#3B75A9] transition-all ease-in-out duration-300'>
+    <div className='flex flex-col border-b border-[#3B75A9] transition-all ease-in-out duration-300 relative'>
+      {/* Hamburger Menu Icon */}
+      <div className="absolute top-2 right-2 z-10">
+        <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Open menu">
+          <EllipsisVerticalIcon className="h-6 w-6 text-[#98A2B3]" />
+        </button>
+        {isMenuOpen && (
+          <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg z-20">
+            <button
+              onClick={downloadPDF}
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+            >
+              Download PDF
+            </button>
+          </div>
+        )}
+      </div>
+
       <div className='text-black py-2'>
         <h2 className='mt-1 font-bold text-lg'>{resource.Asset}</h2>
       </div>
-      <div className=''>
-        <div className='flex items-center text-sm py-2 text-[#0E3052]'>
-          <MapPinIcon className='h-6 w-6 mr-2 flex-shrink-0 [stroke-width:2]' />
-          {formatType(resource.County)} County
+      <div className='flex items-center text-sm py-2 text-[#0E3052]'>
+        <MapPinIcon className='h-6 w-6 mr-2 flex-shrink-0 [stroke-width:2]' />
+        {formatType(resource.County)} 
+      </div>
+      <div className='flex items-center text-sm py-2 text-[#0E3052]'>
+        <BookmarkIcon className='h-6 w-6 mr-2 flex-shrink-0 [stroke-width:2]' />
+        <div className='flex-grow min-w-0 whitespace-normal break-words'>
+          {formatType(resource.Organization_Sub_Type)}
         </div>
       </div>
-      <div className=''>
-        <div className='flex items-center text-sm py-2 text-[#0E3052]'>
-          <BookmarkIcon className='h-6 w-6 mr-2 flex-shrink-0 [stroke-width:2]' />
-          <div className='flex-grow min-w-0 whitespace-normal break-words'>
-            {formatType(resource.Organization_Sub_Type)}
-          </div>
-        </div>
-      </div>
-      <div className=''>
-        <div className='flex items-center text-sm py-2 text-[#0E3052]'>
-          <LinkIcon className='h-6 w-6 mr-2 flex-shrink-0 [stroke-width:2]' />
-          {resource.Website && (
-            <a
-              href={formatWebsite(resource.Website)}
-              target='_blank'
-              rel='noopener noreferrer'
-              className='md:hover:text-[#1E79C8] transition-colors ease-in-out duration-300 flex-grow min-w-0 whitespace-normal break-words'
-            >
-              {resource.Website}
-            </a>
-          )}
-        </div>
+      <div className='flex items-center text-sm py-2 text-[#0E3052]'>
+        <LinkIcon className='h-6 w-6 mr-2 flex-shrink-0 [stroke-width:2]' />
+        {resource.Website && (
+          <a
+            href={formatWebsite(resource.Website)}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='md:hover:text-[#1E79C8] transition-colors ease-in-out duration-300 flex-grow min-w-0 whitespace-normal break-words'
+          >
+            {resource.Website}
+          </a>
+        )}
       </div>
       <div className='pt-4 pb-6'>
         <button
           aria-label={`Learn more about ${resource.Asset}`}
           onClick={() => setShowMore(!showMore)}
-          className='border border-[#1E79C8] text-[#1E79C8] hover:bg-[#3892E1] hover:text-white text-sm cursor-pointer px-12 py-2 rounded-full transition-colors duration-300 flex items-center justify-center gap-2 font-semibold'
+          className='border border-[#0E3052] bg-white text-[#0E3052] hover:bg-[#0E3052] hover:text-white text-md cursor-pointer px-12 py-2 rounded-full transition-colors duration-300 flex items-center justify-center gap-2 font-semibold'
         >
           {showMore ? <>Collapse</> : <>Learn More</>}
         </button>

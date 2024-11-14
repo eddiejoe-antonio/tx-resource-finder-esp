@@ -4,7 +4,7 @@ import AssetInventory from './components/AssetInventory';
 
 const HomePage = () => {
   return (
-    <div className='mx-24'>
+    <div className='mx-2 md:mx-24 my-12'>
       <Header />
       <main>
       <AssetInventory />

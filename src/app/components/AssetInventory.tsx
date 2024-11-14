@@ -161,7 +161,7 @@ const AssetInventory = () => {
           <p className="my-6 md:my-0 text-lg">Showing {filteredResources.length} resources</p>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {paginatedResources.map((resource, index) => (
             <AssetListItem key={index} resource={resource} />
           ))}
