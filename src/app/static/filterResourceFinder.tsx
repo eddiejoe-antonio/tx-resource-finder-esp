@@ -219,8 +219,8 @@ export const popFilterData: FilterData = {
       },
       {
         type: 'Asset_Covered_Population',
-        value: 'Individuals with Disabilities',
-        label: 'Individuals with Disabilities',
+        value: 'Individuals with disabilities',
+        label: 'Individuals with disabilities',
         checked: false,
       },
       {

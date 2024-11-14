@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import AssetListItem from "./AssetListItem";
 import Pagination from "./Pagination";
@@ -6,6 +6,7 @@ import { useState, useRef } from "react";
 import Select, { StylesConfig } from "react-select";
 import useAirtableFetch from "../utils/apiService";
 import { typeFilterData, geographyFilterData, popFilterData, orgFilterData } from '../static/filterResourceFinder';
+import { ArrowDownIcon } from '@heroicons/react/24/outline';
 
 const airtableBaseId = process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID || "";
 const airtableApiKey = process.env.NEXT_PUBLIC_AIRTABLE_API_KEY || "";
@@ -15,7 +16,6 @@ interface FilterOption {
   value: string;
 }
 
-// Define custom styles with proper typing
 const customSelectStyles: StylesConfig<FilterOption, true> = {
   control: (provided) => ({
     ...provided,
@@ -99,11 +99,70 @@ const AssetInventory = () => {
     assetSectionRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const downloadCSV = () => {
+    if (filteredResources.length === 0) {
+      alert("No data to download");
+      return;
+    }
+
+    const csvHeaders = Object.keys(filteredResources[0]).join(",");
+    const csvRows = filteredResources.map(resource =>
+      Object.values(resource).map(value => 
+        Array.isArray(value) ? value.join(";") : value
+      ).join(",")
+    );
+
+    const csvContent = [csvHeaders, ...csvRows].join("\n");
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", "filtered_resources.csv");
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (loading) return <p>Loading resources...</p>;
   if (error) return <p>Error loading resources: {error}</p>;
 
   return (
     <div ref={assetSectionRef}>
+      <header className='w-full mb-6'>
+        <div className='block md:flex md:items-center md:justify-between'>
+          <div className='py-2 col-start-1 col-span-8 gap-0 text-left'>
+            <h1 className="text-[1.5rem] md:text-[2rem] font-semibold font-['Source Sans Pro']">
+              Find Digital Opportunity Resources in Texas
+            </h1>
+          </div>
+          <div className='flex flex-col md:flex-row md:space-x-4 items-center col-start-10 col-span-2 my-4 md:my-0 md:mt-3'>
+            <button
+              aria-label='Add or edit resources'
+              className='bg-white flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition ease-in-out duration-300 w-full md:w-auto mb-4 md:mb-0'
+            >
+              <span className='whitespace-nowrap'>Add or edit resources</span>
+            </button>
+            <button
+              aria-label='Download resources'
+              onClick={downloadCSV}
+              className='flex items-center justify-center px-4 py-2 bg-[#0E3052] text-white rounded-md cursor-pointer transition ease-in-out duration-300 w-full md:w-auto'
+            >
+              <span className='whitespace-nowrap'>Download resources</span>
+              <ArrowDownIcon className='w-5 h-5 ml-2' />
+            </button>
+          </div>
+        </div>
+        <div className='w-full'>
+          <div className='pb-8'>
+            <p className='text-lg'>
+              Use this interactive tool to find support for digital opportunity needs across Texas
+            </p>
+          </div>
+        </div>
+      </header>
+      
       <div className="border-t border-b">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-6">
           <div>

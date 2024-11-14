@@ -1,15 +1,13 @@
-import Header from '@/app/components/Header';
-import Footer from '@/app/components/Footer';
 import AssetInventory from './components/AssetInventory';
+import About from './components/About';
 
 const HomePage = () => {
   return (
-    <div className='mx-2 md:mx-24 my-12'>
-      <Header />
+    <div className='mx-2 md:mx-36 my-12'>
       <main>
       <AssetInventory />
       </main>
-      <Footer />
+      <About />
     </div>
   );
 };
