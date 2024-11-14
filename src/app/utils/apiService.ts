@@ -28,7 +28,7 @@ const useAirtableFetch = (airtableBaseId: string, airtableApiKey: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const airtableUrl = `https://api.airtable.com/v0/${airtableBaseId}/Full%20Assets%202024%20Cleaned`;
+    const airtableUrl = `https://api.airtable.com/v0/${airtableBaseId}/Full%20Assets%202024%20Live`;
     let allRecords: Resource[] = [];
 
     const fetchAirtableData = async (offset?: string) => {
