@@ -189,7 +189,7 @@ const AssetInventory = () => {
               options={geographyFilterData.options}
               value={selectedCounty}
               onChange={(selected) => setSelectedCounty(selected as FilterOption[])}
-              className="w-full mt-1 shadow-sm z-30"
+              className="w-full mt-1 shadow-sm "
               styles={customSelectStyles}
               placeholder=""
             />
@@ -213,7 +213,7 @@ const AssetInventory = () => {
               options={typeFilterData.options}
               value={selectedServiceType}
               onChange={(selected) => setSelectedServiceType(selected as FilterOption[])}
-              className="w-full mt-1 shadow-sm z-30"
+              className="w-full mt-1 shadow-sm "
               styles={customSelectStyles}
               placeholder=""
             />
@@ -237,7 +237,7 @@ const AssetInventory = () => {
               options={orgFilterData.options}
               value={selectedOrganizationType}
               onChange={(selected) => setSelectedOrganizationType(selected as FilterOption[])}
-              className="w-full mt-1 shadow-sm z-30"
+              className="w-full mt-1 shadow-sm "
               styles={customSelectStyles}
               placeholder=""
             />
@@ -261,7 +261,7 @@ const AssetInventory = () => {
               options={popFilterData.options}
               value={selectedPopulationServed}
               onChange={(selected) => setSelectedPopulationServed(selected as FilterOption[])}
-              className="w-full mt-1 shadow-sm z-30"
+              className="w-full mt-1 shadow-sm "
               styles={customSelectStyles}
               placeholder=""
             />

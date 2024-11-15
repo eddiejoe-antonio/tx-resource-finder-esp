@@ -2,9 +2,9 @@ import Image from 'next/image';
 import aboutAsset from '../../../public/ResourceFinder.jpg';
 
 const About = () => (
-  <div className="flex flex-wrap py-10">
+  <div className="flex flex-wrap pt-10">
     {/* Text Section */}
-    <div className="w-full lg:w-1/2 py-6  pr-6">
+    <div className="w-full lg:w-1/2 pt-6  pr-6">
       <h3 className="font-semibold text-[1.8rem] subpixel-antialiased">
         About the Resource Finder
       </h3>
@@ -50,8 +50,8 @@ const About = () => (
     </div>
 
     {/* Image Section */}
-    <div className="w-full lg:w-1/2 py-6 pl-6">
-      <div className="relative w-full h-64 lg:h-full shadow-md">
+    <div className="w-full lg:w-1/2 pt-6 md:pl-6">
+      <div className="relative w-full h-96 lg:h-full shadow-md">
         <Image
           src={aboutAsset}
           alt="Resource Finder overview"

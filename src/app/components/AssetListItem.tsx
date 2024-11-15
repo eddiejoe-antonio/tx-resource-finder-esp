@@ -51,12 +51,12 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ resource }) => {
   return (
     <div className='flex flex-col border-b border-[#3B75A9] transition-all ease-in-out duration-300 relative'>
       {/* Hamburger Menu Icon */}
-      <div className="absolute top-2 right-2 z-10">
+      <div className="absolute top-2 right-2">
         <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Open menu">
           <EllipsisVerticalIcon className="h-6 w-6 text-[#98A2B3]" />
         </button>
         {isMenuOpen && (
-          <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg z-20">
+          <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg">
             <button
               onClick={downloadPDF}
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
