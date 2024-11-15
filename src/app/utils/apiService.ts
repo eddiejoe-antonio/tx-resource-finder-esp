@@ -33,7 +33,7 @@ const useAirtableFetch = (airtableBaseId: string, airtableApiKey: string) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const airtableUrl = `https://api.airtable.com/v0/${airtableBaseId}/Full%20Assets%202024%20Live`;
+      const airtableUrl = `https://api.airtable.com/v0/${airtableBaseId}/Full%20Assets%202024%20Cleaned`;
       let allRecords: Resource[] = [];
       let offset: string | undefined = undefined;
 
@@ -82,10 +82,7 @@ const useAirtableFetch = (airtableBaseId: string, airtableApiKey: string) => {
     };
 
     fetchData();
-  }, [airtableBaseId, airtableApiKey]);
-
-  console.log(resources);
-  
+  }, [airtableBaseId, airtableApiKey]);  
   return { resources, loading, error };
 };
 
