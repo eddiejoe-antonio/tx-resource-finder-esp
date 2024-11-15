@@ -70,24 +70,24 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ resource }) => {
       <div className='text-black py-2'>
         <h2 className='mt-1 font-bold text-lg'>{resource.Asset}</h2>
       </div>
-      <div className='flex items-center text-sm py-2 text-[#0E3052]'>
+      <div className='flex items-center text-md py-2 text-[#0E3052]'>
         <MapPinIcon className='h-6 w-6 mr-2 flex-shrink-0 [stroke-width:2]' />
         {formatType(resource.County)} 
       </div>
-      <div className='flex items-center text-sm py-2 text-[#0E3052]'>
+      <div className='flex items-center text-md py-2 text-[#0E3052]'>
         <BookmarkIcon className='h-6 w-6 mr-2 flex-shrink-0 [stroke-width:2]' />
         <div className='flex-grow min-w-0 whitespace-normal break-words'>
           {formatType(resource.Organization_Sub_Type)}
         </div>
       </div>
-      <div className='flex items-center text-sm py-2 text-[#0E3052]'>
+      <div className='flex items-center text-md py-2 text-[#0E3052]'>
         <LinkIcon className='h-6 w-6 mr-2 flex-shrink-0 [stroke-width:2]' />
         {resource.Website && (
           <a
             href={formatWebsite(resource.Website)}
             target='_blank'
             rel='noopener noreferrer'
-            className='md:hover:text-[#1E79C8] transition-colors ease-in-out duration-300 flex-grow min-w-0 whitespace-normal break-words'
+            className='md:hover:text-[#1E79C8] md:hover:underline transition ease-in-out duration-300 flex-grow min-w-0 whitespace-normal break-words'
           >
             {resource.Website}
           </a>

@@ -6,7 +6,7 @@ import { useState, useRef } from "react";
 import Select, { StylesConfig } from "react-select";
 import useAirtableFetch from "../utils/apiService";
 import { typeFilterData, geographyFilterData, popFilterData, orgFilterData } from '../static/filterResourceFinder';
-import { ArrowDownIcon } from '@heroicons/react/24/outline';
+import { ArrowDownIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 
 const airtableBaseId = process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID || "";
 const airtableApiKey = process.env.NEXT_PUBLIC_AIRTABLE_API_KEY || "";
@@ -78,13 +78,19 @@ const AssetInventory = () => {
   };
 
   const filteredResources = resources.filter((resource) => {
+    // Ensure that the "Hide" field is false
+    if (resource.Hide === true) {
+      return false;
+    }
     const matchesCounty = matchesFilter(resource.County, selectedCounty);
     const matchesServiceType = matchesFilter(resource.Live_Site_Category, selectedServiceType);
     const matchesOrganizationType = matchesFilter(resource.Organization_Sub_Type, selectedOrganizationType);
     const matchesPopulationServed = matchesFilter(resource.Asset_Covered_Population, selectedPopulationServed);
 
     return matchesCounty && matchesServiceType && matchesOrganizationType && matchesPopulationServed;
-  });
+  })
+  .sort((a, b) => a.Asset.localeCompare(b.Asset)); // Alphabetically sort by the 'Asset' field
+
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -140,14 +146,14 @@ const AssetInventory = () => {
           <div className='flex flex-col md:flex-row md:space-x-4 items-center col-start-10 col-span-2 my-4 md:my-0 md:mt-3'>
             <button
               aria-label='Add or edit resources'
-              className='bg-white flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition ease-in-out duration-300 w-full md:w-auto mb-4 md:mb-0'
+              className='bg-white flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition-colors md:hover:bg-[#F9FAFB] duration-300 w-full md:w-auto mb-4 md:mb-0'
             >
               <span className='whitespace-nowrap'>Add or edit resources</span>
             </button>
             <button
               aria-label='Download resources'
               onClick={downloadCSV}
-              className='flex items-center justify-center px-4 py-2 bg-[#0E3052] text-white rounded-md cursor-pointer transition ease-in-out duration-300 w-full md:w-auto'
+              className='flex items-center justify-center px-4 py-2 bg-[#002768] text-white rounded-md cursor-pointer transition-colors duration-300 w-full md:w-auto md:hover:bg-[#002E99]'
             >
               <span className='whitespace-nowrap'>Download resources</span>
               <ArrowDownIcon className='w-5 h-5 ml-2' />
@@ -166,50 +172,98 @@ const AssetInventory = () => {
       <div className="border-t border-b">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-6">
           <div>
-            <label className="font-medium text-sm">Select County</label>
+            <label className="font-medium text-sm flex items-center gap-2">
+              Select County
+              {/* Tooltip */}
+              <div className="tooltip-container">
+                <span className="tooltip-icon">
+                <QuestionMarkCircleIcon className="h-5 w-5 text-[#98A2B3] md:hover:text-[#667085]" />
+                </span>
+                <div className="tooltip-content">
+                  Use this filter to select one or more counties where you want to find resources.
+                </div>
+              </div>
+            </label>
             <Select
               isMulti
               options={geographyFilterData.options}
               value={selectedCounty}
               onChange={(selected) => setSelectedCounty(selected as FilterOption[])}
-              className="w-full"
+              className="w-full mt-1 shadow-sm z-30"
               styles={customSelectStyles}
+              placeholder=""
             />
           </div>
 
           <div>
-            <label className="font-medium text-sm">Select Service Type</label>
+            <label className="font-medium text-sm flex items-center gap-2">
+              Select Service Type
+              {/* Tooltip */}
+              <div className="tooltip-container">
+                <span className="tooltip-icon">
+                <QuestionMarkCircleIcon className="h-5 w-5 text-[#98A2B3] md:hover:text-[#667085]" />
+                </span>
+                <div className="tooltip-content">
+                  Use this filter to select one or more categories of digital opportunity services. 
+                </div>
+              </div>
+            </label>
             <Select
               isMulti
               options={typeFilterData.options}
               value={selectedServiceType}
               onChange={(selected) => setSelectedServiceType(selected as FilterOption[])}
-              className="w-full"
+              className="w-full mt-1 shadow-sm z-30"
               styles={customSelectStyles}
+              placeholder=""
             />
           </div>
 
           <div>
-            <label className="font-medium text-sm">Select Organization Type</label>
+            <label className="font-medium text-sm flex items-center gap-2">
+              Select Organization Type
+              {/* Tooltip */}
+              <div className="tooltip-container">
+                <span className="tooltip-icon">
+                <QuestionMarkCircleIcon className="h-5 w-5 text-[#98A2B3] md:hover:text-[#667085]" />
+                </span>
+                <div className="tooltip-content">
+                  Use this filter to select one or more types of digital opportunity organizations. 
+                </div>
+              </div>
+            </label>
             <Select
               isMulti
               options={orgFilterData.options}
               value={selectedOrganizationType}
               onChange={(selected) => setSelectedOrganizationType(selected as FilterOption[])}
-              className="w-full"
+              className="w-full mt-1 shadow-sm z-30"
               styles={customSelectStyles}
+              placeholder=""
             />
           </div>
 
           <div>
-            <label className="font-medium text-sm">Select Population Served</label>
+            <label className="font-medium text-sm flex items-center gap-2">
+              Select Population Served
+              {/* Tooltip */}
+              <div className="tooltip-container">
+                <span className="tooltip-icon">
+                  <QuestionMarkCircleIcon className="h-5 w-5 text-[#98A2B3] md:hover:text-[#667085]" />
+                </span>
+                <div className="tooltip-content">
+                  Use this filter to select one or more populations served. 
+                </div>
+              </div>
+            </label>
             <Select
               isMulti
               options={popFilterData.options}
               value={selectedPopulationServed}
               onChange={(selected) => setSelectedPopulationServed(selected as FilterOption[])}
-              className="w-full"
+              className="w-full mt-1 shadow-sm z-30"
               styles={customSelectStyles}
+              placeholder=""
             />
           </div>
         </div>
@@ -217,7 +271,7 @@ const AssetInventory = () => {
       
       <div>
         <div className="block md:flex my-6 justify-between items-center">
-          <p className="my-6 md:my-0 text-lg">Showing {filteredResources.length} resources</p>
+          <p className="my-6 md:my-0 text-xl">Showing {filteredResources.length} resources</p>
         </div>
 
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -19,3 +19,38 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.tooltip-container {
+  position: relative;
+  display: inline-flex; /* Keeps the icon aligned with text */
+  align-items: center; /* Ensures vertical alignment */
+}
+
+.tooltip-icon {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tooltip-content {
+  visibility: hidden;
+  opacity: 0;
+  width: 15rem;
+  background-color: black;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 125%; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  transition: opacity 0.3s ease;
+  font-size: 0.875rem;
+}
+
+.tooltip-container:hover .tooltip-content {
+  visibility: visible;
+  opacity: 1;
+}

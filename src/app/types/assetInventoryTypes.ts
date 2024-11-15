@@ -10,6 +10,7 @@ export interface Resource {
   Website: string;
   County: string[];
   Asset_Covered_Population: string[];
+  Hide: boolean;
 }
 
 export interface AssetListItemProps {

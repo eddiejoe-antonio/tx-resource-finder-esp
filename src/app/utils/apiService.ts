@@ -12,6 +12,7 @@ interface ResourceFields {
   "County"?: string;
   "Organization Sub-Type": string[];
   "Asset Covered Population": string[];
+  "Hide": boolean;
 }
 
 
@@ -62,6 +63,7 @@ const useAirtableFetch = (airtableBaseId: string, airtableApiKey: string) => {
             Website: record.fields["Website"] || "",
             County: Array.isArray(record.fields["County"]) ? record.fields["County"] : [record.fields["County"] || ""],
             Asset_Covered_Population: record.fields["Asset Covered Population"] || [],
+            Hide: record.fields.Hide,
           }));
           
         
