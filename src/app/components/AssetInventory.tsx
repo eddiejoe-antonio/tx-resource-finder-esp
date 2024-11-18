@@ -104,22 +104,46 @@ const AssetInventory = () => {
   };
 
   const downloadCSV = () => {
-    if (filteredResources.length === 0) {
+    if (!resources || resources.length === 0) {
       alert("No data to download");
       return;
     }
-
-    const csvHeaders = Object.keys(filteredResources[0]).join(",");
-    const csvRows = filteredResources.map(resource =>
-      Object.values(resource).map(value => 
-        Array.isArray(value) ? value.join(";") : value
-      ).join(",")
-    );
-
-    const csvContent = [csvHeaders, ...csvRows].join("\n");
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  
+    // Map Airtable API response into clean CSV rows
+    const csvHeaders = [
+      "Asset",
+      "Organization",
+      "Asset_Description",
+      "Key_Contact",
+      "Contact_Email",
+      "Live_Site_Category",
+      "Website",
+      "County",
+      "Asset_Covered_Population",
+      "Hide",
+    ]; // Include only the fields you want in the CSV
+  
+    // Generate rows from the Airtable API response
+    const csvRows = resources
+      .filter((resource) => !resource.Hide) // Exclude hidden resources
+      .map((resource) =>
+        csvHeaders
+          .map((header) => {
+            const value = resource[header]; // Access field by key
+            if (Array.isArray(value)) {
+              return value.join(";"); // Join array fields with semicolons
+            }
+            return value ? `"${value.toString().replace(/"/g, '""')}"` : ""; // Escape quotes
+          })
+          .join(",") // Separate fields with commas
+      );
+  
+    // Combine headers and rows
+    const csvContent = [csvHeaders.join(","), ...csvRows].join("\n");
+  
+    // Trigger CSV download
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const link = document.createElement("a");
-
     const url = URL.createObjectURL(blob);
     link.setAttribute("href", url);
     link.setAttribute("download", "filtered_resources.csv");
@@ -128,7 +152,7 @@ const AssetInventory = () => {
     link.click();
     document.body.removeChild(link);
   };
-
+  
   return (
     <div ref={assetSectionRef}>
       <header className='w-full mb-6'>

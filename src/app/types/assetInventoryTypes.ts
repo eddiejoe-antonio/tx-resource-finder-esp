@@ -11,6 +11,7 @@ export interface Resource {
   County: string[];
   Asset_Covered_Population: string[];
   Hide: boolean;
+  [key: string]: string | string[] | boolean | undefined; // Add this index signature
 }
 
 export interface AssetListItemProps {
