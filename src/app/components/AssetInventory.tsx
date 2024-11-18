@@ -4,6 +4,7 @@ import AssetListItem from "./AssetListItem";
 import Pagination from "./Pagination";
 import { useState, useRef } from "react";
 import Select, { StylesConfig } from "react-select";
+import { BeatLoader } from "react-spinners";
 import useAirtableFetch from "../utils/apiService";
 import { typeFilterData, geographyFilterData, popFilterData, orgFilterData } from '../static/filterResourceFinder';
 import { ArrowDownIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
@@ -78,7 +79,6 @@ const AssetInventory = () => {
   };
 
   const filteredResources = resources.filter((resource) => {
-    // Ensure that the "Hide" field is false
     if (resource.Hide === true) {
       return false;
     }
@@ -88,9 +88,7 @@ const AssetInventory = () => {
     const matchesPopulationServed = matchesFilter(resource.Asset_Covered_Population, selectedPopulationServed);
 
     return matchesCounty && matchesServiceType && matchesOrganizationType && matchesPopulationServed;
-  })
-  .sort((a, b) => a.Asset.localeCompare(b.Asset)); // Alphabetically sort by the 'Asset' field
-
+  }).sort((a, b) => a.Asset.localeCompare(b.Asset));
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -131,20 +129,15 @@ const AssetInventory = () => {
     document.body.removeChild(link);
   };
 
-  if (loading) return <p>Loading resources...</p>;
-  if (error) return <p>Error loading resources: {error}</p>;
-
   return (
     <div ref={assetSectionRef}>
       <header className='w-full mb-6'>
         <div className='block md:flex md:items-center md:justify-between'>
-          <div className='py-2 col-start-1 col-span-8 gap-0 text-left'>
-            <h1 className="text-[1.5rem] md:text-[2rem] font-semibold font-['Source Sans Pro']">
-              Find Digital Opportunity Resources in Texas
-            </h1>
-          </div>
-          <div className='flex flex-col md:flex-row md:space-x-4 items-center col-start-10 col-span-2 my-4 md:my-0 md:mt-3'>
-            <button
+          <h1 className="text-[1.5rem] md:text-[2rem] font-semibold font-['Source Sans Pro']">
+            Find Digital Opportunity Resources in Texas
+          </h1>
+          <div className='flex flex-col md:flex-row md:space-x-4 items-center'>
+          <button
               aria-label='Add or edit resources'
               className='bg-white flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition-colors md:hover:bg-[#F9FAFB] duration-300 w-full md:w-auto mb-4 md:mb-0'
             >
@@ -160,15 +153,8 @@ const AssetInventory = () => {
             </button>
           </div>
         </div>
-        <div className='w-full'>
-          <div className='pb-8'>
-            <p className='text-lg'>
-              Use this interactive tool to find support for digital opportunity needs across Texas
-            </p>
-          </div>
-        </div>
       </header>
-      
+
       <div className="border-t border-b">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-6">
           <div>
@@ -268,24 +254,28 @@ const AssetInventory = () => {
           </div>
         </div>
       </div>
-      
-      <div>
-        <div className="block md:flex my-6 justify-between items-center">
-          <p className="my-6 md:my-0 text-xl">Showing {filteredResources.length} resources</p>
-        </div>
 
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {paginatedResources.map((resource, index) => (
-            <AssetListItem key={index} resource={resource} />
-          ))}
-        </div>
-
-        <Pagination
-          currentPage={currentPage}
-          totalPages={Math.ceil(filteredResources.length / itemsPerPage)}
-          onPageChange={handlePageChange}
-        />
+      {loading ? (
+        <div className="flex justify-center items-center my-64">
+        <BeatLoader color="#002768" size={20} />
       </div>
+      ) : error ? (
+        <p className="mt-6 text-red-600">Error loading resources: {error}</p>
+      ) : (
+        <>
+          <p className="mt-6">Showing {filteredResources.length} resources</p>
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {paginatedResources.map((resource, index) => (
+              <AssetListItem key={index} resource={resource} />
+            ))}
+          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.ceil(filteredResources.length / itemsPerPage)}
+            onPageChange={handlePageChange}
+          />
+        </>
+      )}
     </div>
   );
 };
