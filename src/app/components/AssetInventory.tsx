@@ -155,7 +155,7 @@ const AssetInventory = () => {
   
   return (
     <div ref={assetSectionRef}>
-      <header className='w-full mb-6'>
+      <header className='w-full mb-4 md:mb-6'>
         <div className='block md:flex md:items-center md:justify-between'>
           <h1 className="text-[1.5rem] md:text-[2rem] font-semibold font-['Source Sans Pro']">
             Find Digital Opportunity Resources in Texas
@@ -176,6 +176,9 @@ const AssetInventory = () => {
               <ArrowDownIcon className='w-5 h-5 ml-2' />
             </button>
           </div>
+        </div>
+        <div className="mt-6 md:mt-2 text-lg">
+        Use this interactive tool to find support for digital opportunity needs across Texas.
         </div>
       </header>
 
@@ -287,7 +290,7 @@ const AssetInventory = () => {
         <p className="mt-6 text-red-600">Error loading resources: {error}</p>
       ) : (
         <>
-          <p className="mt-6">Showing {filteredResources.length} resources</p>
+          <p className="mt-6 text-lg">Showing {filteredResources.length} resources</p>
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {paginatedResources.map((resource, index) => (
               <AssetListItem key={index} resource={resource} />

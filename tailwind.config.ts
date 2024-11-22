@@ -12,6 +12,9 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        sans: ["Inter", "Arial", "Helvetica", "sans-serif"], // Add Inter here
+      },
     },
   },
   plugins: [],
