@@ -49,7 +49,7 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ resource }) => {
   };
 
   return (
-<div className="flex flex-col border-b border-[#3B75A9] transition-all ease-in-out duration-300 relative h-full">
+<div className="flex flex-col border-b border-[#3B75A9] transition-all ease-in-out duration-300 relative">
   <div className="absolute top-2 right-2">
     <button onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Open menu">
       <EllipsisVerticalIcon className="h-6 w-6 text-[#98A2B3]" />
@@ -93,9 +93,6 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ resource }) => {
     )}
   </div>
 
-  {/* Add a spacer here */}
-  <div className="flex-grow"></div>
-
   {/* Learn More Button */}
   <div className="pt-4 pb-6">
     <button
@@ -103,7 +100,7 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ resource }) => {
       onClick={() => setShowMore(!showMore)}
       className="border border-[#0E3052] bg-white text-[#0E3052] hover:bg-[#0E3052] hover:text-white text-lg cursor-pointer px-12 py-2 rounded-full transition-colors duration-300 flex items-center justify-center gap-2 font-semibold"
     >
-      {showMore ? <>Collapse</> : <>Learn More</>}
+      {showMore ? <>Hide</> : <>Learn More</>}
     </button>
     {showMore && (
       <div className="my-4 text-md">
@@ -135,7 +132,6 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ resource }) => {
     )}
   </div>
 </div>
-
   );
 };
 
