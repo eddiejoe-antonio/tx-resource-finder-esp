@@ -37,13 +37,13 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ resource }) => {
       yPosition += lines.length * 6;
     };
 
-    addWrappedText(`Location: ${formatType(resource.County)}`);
-    addWrappedText(`Organization Type: ${formatType(resource.Organization_Sub_Type)}`);
-    if (resource.Website) addWrappedText(`Website: ${formatWebsite(resource.Website)}`);
-    if (resource.Asset_Description) addWrappedText(`Description: ${resource.Asset_Description}`);
-    addWrappedText(`Populations Served: ${formatType(resource.Asset_Covered_Population)}`);
-    if (resource.Key_Contact) addWrappedText(`Contact: ${resource.Key_Contact}`);
-    if (resource.Contact_Email) addWrappedText(`Email: ${resource.Contact_Email}`);
+    addWrappedText(`Ubicación: ${formatType(resource.County)}`);
+    addWrappedText(`Tipo de servicio: ${formatType(resource.Organization_Sub_Type)}`);
+    if (resource.Website) addWrappedText(`Sitio web: ${formatWebsite(resource.Website)}`);
+    if (resource.Asset_Description) addWrappedText(`Descripción: ${resource.Asset_Description}`);
+    addWrappedText(`Poblaciones atendidas: ${formatType(resource.Asset_Covered_Population)}`);
+    if (resource.Key_Contact) addWrappedText(`Contacto: ${resource.Key_Contact}`);
+    if (resource.Contact_Email) addWrappedText(`Correo electrónico: ${resource.Contact_Email}`);
 
     doc.save(`${resource.Asset}.pdf`);
   };
