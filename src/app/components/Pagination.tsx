@@ -50,7 +50,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
             className='px-2 py-1 mx-1 rounded-md md:hover:bg-[#dedede]'
             aria-label='First page'
           >
-            {'<< First'}
+            {'<< Primera'}
           </button>
         </li>
         <li>
@@ -60,7 +60,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
             className='px-2 py-1 mx-1 rounded-md md:hover:bg-[#dedede]'
             aria-label='Previous page'
           >
-            {'< Previous'}
+            {'< Anterior'}
           </button>
         </li>
         {getPageNumbers().map((page, index) => (
@@ -88,7 +88,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
             className='px-2 py-1 mx-1 rounded-md md:hover:bg-[#dedede]'
             aria-label='Next page'
           >
-            {'Next >'}
+            {'Próxima >'}
           </button>
         </li>
         <li>
@@ -98,7 +98,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
             className='px-2 py-1 mx-1 rounded-md md:hover:bg-[#dedede]'
             aria-label='Last page'
           >
-            {'Last >>'}
+            {'Última >>'}
           </button>
         </li>
       </ul>

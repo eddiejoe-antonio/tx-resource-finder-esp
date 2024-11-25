@@ -60,7 +60,7 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ resource }) => {
           onClick={downloadPDF}
           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
         >
-          Download PDF
+          Descargar PDF
         </button>
       </div>
     )}
@@ -96,24 +96,24 @@ const AssetListItem: React.FC<AssetListItemProps> = ({ resource }) => {
   {/* Learn More Button */}
   <div className="pt-4 pb-6">
     <button
-      aria-label={`Learn more about ${resource.Asset}`}
+      aria-label={`Más información sobre ${resource.Asset}`}
       onClick={() => setShowMore(!showMore)}
       className="border border-[#0E3052] bg-white text-[#0E3052] hover:bg-[#0E3052] hover:text-white text-lg cursor-pointer px-12 py-2 rounded-full transition-colors duration-300 flex items-center justify-center gap-2 font-semibold"
     >
-      {showMore ? <>Hide</> : <>Learn More</>}
+      {showMore ? <>Esconder</> : <>Más Información</>}
     </button>
     {showMore && (
       <div className="my-4 text-md">
         <div className="my-4">
-          <p className="my-2 font-semibold">Description</p>
+          <p className="my-2 font-semibold">Descripción</p>
           <p className="whitespace-normal break-words">{resource.Asset_Description}</p>
         </div>
         <div className="my-4">
-          <p className="my-2 font-semibold">Populations Served</p>
+          <p className="my-2 font-semibold">Poblaciones atendidas</p>
           <p className="whitespace-normal break-words">{formatType(resource.Asset_Covered_Population)}</p>
         </div>
         <div className="my-4">
-          <p className="my-2 font-semibold">Contact Information</p>
+          <p className="my-2 font-semibold">Información del contacto</p>
           <p className="whitespace-normal break-words">{resource.Key_Contact}</p>
           {resource.Contact_Email && (
             <p className="whitespace-normal break-words">

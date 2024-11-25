@@ -158,31 +158,31 @@ const AssetInventory = () => {
       <header className='w-full mb-4 md:mb-6'>
         <div className='block md:flex md:items-center md:justify-between'>
           <h1 className="text-[1.5rem] md:text-[2rem] font-semibold font-['Source Sans Pro']">
-            Find Digital Opportunity Resources in Texas
+          Buscar recursos de oportunidad digital en Texas
           </h1>
           <div className='flex flex-col md:flex-row md:space-x-4 items-center'>
           <button
-            aria-label="Add or edit resources"
+            aria-label="Agregar o editar recursos"
             onClick={() => {
               window.open("https://airtable.com/appbal6AbAyP6G2la/pag1deByHl6ENRMTe/form", "_blank");
             }}
             className="bg-white flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition-colors md:hover:bg-[#F9FAFB] duration-300 w-full md:w-auto mb-4 md:mb-0"
           >
-            <span className="whitespace-nowrap">Add or edit resources</span>
+            <span className="whitespace-nowrap">Agregar o editar recursos</span>
           </button>
 
             <button
-              aria-label='Download resources'
+              aria-label='Descargar recursos'
               onClick={downloadCSV}
               className='flex items-center justify-center px-4 py-2 bg-[#002768] text-white rounded-md cursor-pointer transition-colors duration-300 w-full md:w-auto md:hover:bg-[#002E99]'
             >
-              <span className='whitespace-nowrap'>Download resources</span>
+              <span className='whitespace-nowrap'>Descargar recursos</span>
               <ArrowDownIcon className='w-5 h-5 ml-2' />
             </button>
           </div>
         </div>
         <div className="mt-6 md:mt-2 text-lg">
-        Use this interactive tool to find support for digital opportunity needs across Texas.
+        Use esta herramienta interactiva para buscar asistencia con las necesidades de oportunidad digital en todo Texas.
         </div>
       </header>
 
@@ -190,14 +190,14 @@ const AssetInventory = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-6">
           <div>
             <label className="font-medium text-sm flex items-center gap-2">
-              Select County
+              Seleccione el condado
               {/* Tooltip */}
               <div className="tooltip-container">
                 <span className="tooltip-icon">
                 <QuestionMarkCircleIcon className="h-5 w-5 text-[#98A2B3] md:hover:text-[#667085]" />
                 </span>
                 <div className="tooltip-content">
-                  Use this filter to select one or more counties where you want to find resources.
+                Utilice este filtro para seleccionar uno o más condados donde desea encontrar recursos.
                 </div>
               </div>
             </label>
@@ -214,14 +214,14 @@ const AssetInventory = () => {
 
           <div>
             <label className="font-medium text-sm flex items-center gap-2">
-              Select Service Type
+            Seleccione el tipo de servicio
               {/* Tooltip */}
               <div className="tooltip-container">
                 <span className="tooltip-icon">
                 <QuestionMarkCircleIcon className="h-5 w-5 text-[#98A2B3] md:hover:text-[#667085]" />
                 </span>
                 <div className="tooltip-content">
-                  Use this filter to select one or more categories of digital opportunity services. 
+                Utilice este filtro para seleccionar una o más categorías de servicios de oportunidades digitales.
                 </div>
               </div>
             </label>
@@ -238,14 +238,14 @@ const AssetInventory = () => {
 
           <div>
             <label className="font-medium text-sm flex items-center gap-2">
-              Select Organization Type
+            Seleccione el tipo de organización
               {/* Tooltip */}
               <div className="tooltip-container">
                 <span className="tooltip-icon">
                 <QuestionMarkCircleIcon className="h-5 w-5 text-[#98A2B3] md:hover:text-[#667085]" />
                 </span>
                 <div className="tooltip-content">
-                  Use this filter to select one or more types of digital opportunity organizations. 
+                Utilice este filtro para seleccionar uno o más tipos de organizaciones de oportunidad digital. 
                 </div>
               </div>
             </label>
@@ -262,14 +262,14 @@ const AssetInventory = () => {
 
           <div>
             <label className="font-medium text-sm flex items-center gap-2">
-              Select Population Served
+            Seleccione la población atendida
               {/* Tooltip */}
               <div className="tooltip-container">
                 <span className="tooltip-icon">
                   <QuestionMarkCircleIcon className="h-5 w-5 text-[#98A2B3] md:hover:text-[#667085]" />
                 </span>
                 <div className="tooltip-content">
-                  Use this filter to select one or more populations served. 
+                Utilice este filtro para seleccionar una o más poblaciones atendidas.
                 </div>
               </div>
             </label>
@@ -294,7 +294,7 @@ const AssetInventory = () => {
         <p className="mt-6 text-red-600">Error loading resources: {error}</p>
       ) : (
         <>
-          <p className="mt-6 text-lg">Showing {filteredResources.length} resources</p>
+          <p className="mt-6 text-lg">Se muestran {filteredResources.length} recursos</p>
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {paginatedResources.map((resource, index) => (
               <AssetListItem key={index} resource={resource} />

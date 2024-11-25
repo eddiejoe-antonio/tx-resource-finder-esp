@@ -2,16 +2,16 @@ import { useState, useEffect } from "react";
 import { Resource } from "../types/assetInventoryTypes";
 
 interface ResourceFields {
-  "Asset": string;
+  "Asset_ESP": string;
   "Location": string;
-  "Asset Description"?: string;
+  "Asset Description_ESP"?: string;
   "Key Contact"?: string;
   "Contact Email"?: string;
-  "Live Site Category"?: string[];
+  "Live Site Category_ESP"?: string[];
   "Website"?: string;
   "County"?: string;
-  "Organization Sub-Type": string[];
-  "Asset Covered Population": string[];
+  "Organization Sub-Type_ESP": string[];
+  "Asset Covered Population_ESP": string[];
   "Hide": boolean;
 }
 
@@ -54,15 +54,15 @@ const useAirtableFetch = (airtableBaseId: string, airtableApiKey: string) => {
           const data: AirtableResponse = await response.json();
 
           const formattedData: Resource[] = data.records.map((record) => ({
-            Asset: record.fields["Asset"] || "",
-            Organization_Sub_Type: record.fields["Organization Sub-Type"] || [],
-            Asset_Description: record.fields["Asset Description"] || "",
+            Asset: record.fields["Asset_ESP"] || "",
+            Organization_Sub_Type: record.fields["Organization Sub-Type_ESP"] || [],
+            Asset_Description: record.fields["Asset Description_ESP"] || "",
             Key_Contact: record.fields["Key Contact"] || "",
             Contact_Email: record.fields["Contact Email"] || "",
-            Live_Site_Category: record.fields["Live Site Category"] || [],
+            Live_Site_Category: record.fields["Live Site Category_ESP"] || [],
             Website: record.fields["Website"] || "",
             County: Array.isArray(record.fields["County"]) ? record.fields["County"] : [record.fields["County"] || ""],
-            Asset_Covered_Population: record.fields["Asset Covered Population"] || [],
+            Asset_Covered_Population: record.fields["Asset Covered Population_ESP"] || [],
             Hide: record.fields.Hide,
           }));
           
