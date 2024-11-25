@@ -157,8 +157,8 @@ const AssetInventory = () => {
     <div ref={assetSectionRef}>
       <header className='w-full mb-4 md:mb-6'>
         <div className='block md:flex md:items-center md:justify-between'>
-          <h1 className="text-[1.5rem] md:text-[2rem] font-semibold font-['Source Sans Pro']">
-          Buscar recursos de oportunidad digital en Texas
+        <h1 className="text-[1.5rem] md:text-[2rem] font-semibold font-['Source Sans Pro'] md:mb-0 mb-4">
+        Buscar recursos de oportunidad digital en Texas
           </h1>
           <div className='flex flex-col md:flex-row md:space-x-4 items-center'>
           <button
