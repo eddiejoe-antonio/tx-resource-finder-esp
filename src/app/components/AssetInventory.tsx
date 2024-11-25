@@ -162,11 +162,15 @@ const AssetInventory = () => {
           </h1>
           <div className='flex flex-col md:flex-row md:space-x-4 items-center'>
           <button
-              aria-label='Add or edit resources'
-              className='bg-white flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition-colors md:hover:bg-[#F9FAFB] duration-300 w-full md:w-auto mb-4 md:mb-0'
-            >
-              <span className='whitespace-nowrap'>Add or edit resources</span>
-            </button>
+            aria-label="Add or edit resources"
+            onClick={() => {
+              window.open("https://airtable.com/appbal6AbAyP6G2la/pag1deByHl6ENRMTe/form", "_blank");
+            }}
+            className="bg-white flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition-colors md:hover:bg-[#F9FAFB] duration-300 w-full md:w-auto mb-4 md:mb-0"
+          >
+            <span className="whitespace-nowrap">Add or edit resources</span>
+          </button>
+
             <button
               aria-label='Download resources'
               onClick={downloadCSV}
