@@ -30,45 +30,20 @@ export const orgFilterData: FilterData = {
       {
         type: 'Organization_Sub_Type',
         checked: false,
-        value: 'Entidad gubernamental',
-        label: 'Entidad gubernamental',
-      },
-      {
-        type: 'Organization_Sub_Type',
-        checked: false,
-        value: 'Organización basada en la comunidad',
-        label: 'Organización basada en la comunidad',
-      },
-      {
-        type: 'Organization_Sub_Type',
-        checked: false,
-        value: 'Universidad o instituto de enseñanza superior',
-        label: 'Universidad o instituto de enseñanza superior',
-      },
-      { 
-        
-        value: 'Organización de defensa',
-        type: 'Organization_Sub_Type',
-        checked: false,
-        label: 'Organización de defensa',
-      },
-      {
-        type: 'Organization_Sub_Type',
-        checked: false,
         value: 'Educación desde preescolar hasta el 12.° grado',
         label: 'Educación desde preescolar hasta el 12.° grado',
       },
       {
         type: 'Organization_Sub_Type',
         checked: false,
-        value: 'Proveedor de servicios de internet',
-        label: 'Proveedor de servicios de internet',
+        value: 'Entidad gubernamental',
+        label: 'Entidad gubernamental',
       },
-      {
+      { 
         type: 'Organization_Sub_Type',
         checked: false,
-        value: 'Proveedor de vivienda',
-        label: 'Proveedor de vivienda',
+        value: 'Filantropía',
+        label: 'Filantropía',
       },
       {
         type: 'Organization_Sub_Type',
@@ -85,14 +60,14 @@ export const orgFilterData: FilterData = {
       {
         type: 'Organization_Sub_Type',
         checked: false,
-        value: 'Filantropía',
-        label: 'Filantropía',
+        value: 'Organización con fines de lucro',
+        label: 'Organización con fines de lucro',
       },
       {
         type: 'Organization_Sub_Type',
         checked: false,
-        value: 'Organización con fines de lucro',
-        label: 'Organización con fines de lucro',
+        value: 'Organización de defensa de derechos',
+        label: 'Organización de defensa de derechos',
       },
       {
         type: 'Organization_Sub_Type',
@@ -100,6 +75,24 @@ export const orgFilterData: FilterData = {
         value: 'Otra',
         label: 'Otra',
       },
+      {
+        type: 'Organization_Sub_Type',
+        checked: false,
+        value: 'Proveedor de servicios de internet',
+        label: 'Proveedor de servicios de internet',
+      },
+      {
+        type: 'Organization_Sub_Type',
+        checked: false,
+        value: 'Proveedor de vivienda',
+        label: 'Proveedor de vivienda',
+      },
+      {
+        type: 'Organization_Sub_Type',
+        checked: false,
+        value: 'Universidad o instituto de enseñanza superior',
+        label: 'Universidad o instituto de enseñanza superior',
+      }, 
     ],
 }
 
