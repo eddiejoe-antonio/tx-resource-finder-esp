@@ -164,7 +164,7 @@ const AssetInventory = () => {
           <button
             aria-label="Agregar o editar recursos"
             onClick={() => {
-              window.open("https://airtable.com/appbal6AbAyP6G2la/pagMbiluh9BXiW4Qf/form", "_blank");
+              window.open("https://airtable.com/appbal6AbAyP6G2la/pagCsMGwxMLCGBGFz/form", "_blank");
             }}
             className="bg-white flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer transition-colors md:hover:bg-[#F9FAFB] duration-300 w-full md:w-auto mb-4 md:mb-0"
           >
